@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c -w ",
+    "dev": "rollup -c -w --port 5555",
     "start": "sirv public --no-clear --port 5555"
   },
   "devDependencies": {
