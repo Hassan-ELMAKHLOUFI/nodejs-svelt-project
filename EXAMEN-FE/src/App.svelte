@@ -2,19 +2,41 @@
 	export let movies=[] ;
 	import {onMount} from "svelte";
 	import Genre from './Genre.svelte';
-	import  Nav from './Nav.svelte'
+	import  Nav from './Nav.svelte';
 
-
-
-	onMount(async () => {
-    await fetch(`http://localhost:3000/movies/?take=10&skip=1`)
+    export  let pagination={};
+	onMount( () => {
+		getMovies();
+});
+async function getMovies(){
+    await fetch(`http://localhost:3000/movies/?take=10&skip=0`)
         .then(r => r.json())
         .then(data => {
 			console.log(data.data)
             movies = data.data;
+			pagination={take:10,skip:0}
+			
         });
-});
+}
 
+async function getMoviesPaginated(skip){
+	var laux
+	if(skip==="+1"){
+		laux=parseInt(pagination.skip)+10
+	}else if(skip==="-1"){
+		laux=parseInt(pagination.skip)-10
+	}else{laux=parseInt(skip)*10;}
+	console.log(laux)
+    await fetch(`http://localhost:3000/movies/?take=10&skip=${laux}`)
+        .then(r => r.json())
+        .then(data => {
+			console.log(data.data)
+            movies = data.data;
+			pagination={take:10,skip:laux}
+			
+        });
+console.log("test")
+}
 </script>
 
 <main>
@@ -48,9 +70,19 @@
 		</tbody>          
 	  </table>
 	</div>
+	<nav aria-label="Page navigation example">
+		<ul class="pagination">
+		  <li class="page-item"><button class="page-link" on:click={()=>getMoviesPaginated("-1")} >Previous</button></li> 
+		  <li class="page-item"><button  class="page-link" on:click={()=>getMoviesPaginated(1)}>1</button></li>
+		  <li class="page-item"><button class="page-link" on:click={()=>getMoviesPaginated(2)} >2</button></li>
+		  <li class="page-item"><button class="page-link" on:click={()=>getMoviesPaginated(3)}>3</button></li>
+		  <li class="page-item"><button class="page-link" on:click={()=>getMoviesPaginated("+1")} >Next</button></li>
+		</ul>
+	  </nav>
+	  <button on:click={()=>console.log("testeeeeee")}>My awesome button</button>
 </main>
 
-<style>
+  <style>
  table{
 	 margin-top: 150px;
  }
