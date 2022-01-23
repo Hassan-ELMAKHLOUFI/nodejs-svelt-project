@@ -1,14 +1,10 @@
 <script>
     export let genres=[] ;
 </script>
-
 <main>
-
-			{#each  genres as genre }
-            <span>{genre} ,</span>
-                
-			{/each}
-
+	{#each  genres as genre }
+    <span>{genre} ,</span>             
+	{/each}
 </main>
 
 <style>

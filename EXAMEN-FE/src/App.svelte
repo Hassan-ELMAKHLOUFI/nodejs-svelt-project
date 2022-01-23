@@ -26,7 +26,6 @@ async function getMoviesPaginated(skip){
 	}else if(skip==="-1"){
 		laux=parseInt(pagination.skip)-10
 	}else{laux=parseInt(skip)*10;}
-	console.log(laux)
     await fetch(`http://localhost:3000/movies/?take=10&skip=${laux}`)
         .then(r => r.json())
         .then(data => {
@@ -35,7 +34,6 @@ async function getMoviesPaginated(skip){
 			pagination={take:10,skip:laux}
 			
         });
-console.log("test")
 }
 </script>
 
@@ -70,7 +68,7 @@ console.log("test")
 		</tbody>          
 	  </table>
 	</div>
-	<nav aria-label="Page navigation example">
+	<nav style="margin-left:40%" aria-label="Page navigation example">
 		<ul class="pagination">
 		  <li class="page-item"><button class="page-link" on:click={()=>getMoviesPaginated("-1")} >Previous</button></li> 
 		  <li class="page-item"><button  class="page-link" on:click={()=>getMoviesPaginated(1)}>1</button></li>
@@ -79,7 +77,6 @@ console.log("test")
 		  <li class="page-item"><button class="page-link" on:click={()=>getMoviesPaginated("+1")} >Next</button></li>
 		</ul>
 	  </nav>
-	  <button on:click={()=>console.log("testeeeeee")}>My awesome button</button>
 </main>
 
   <style>
